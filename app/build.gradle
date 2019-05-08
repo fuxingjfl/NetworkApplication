@@ -1,0 +1,65 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion "25.0.3"
+    defaultConfig {
+        applicationId "xhb.xha.com.networkapplication"
+        minSdkVersion 16
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        jackOptions {
+            enabled true
+        }
+    }
+    //添加这段代码
+    packagingOptions {
+        exclude 'META-INF/rxjava.properties'
+        // … and any other excludes go here
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    compile 'com.android.support:appcompat-v7:25.2.0'
+    testCompile 'junit:junit:4.12'
+
+    //retrofit
+    compile "com.squareup.retrofit2:retrofit:$retrofit_version"
+    compile "com.squareup.retrofit2:converter-gson:$retrofit_version"
+    compile "com.squareup.retrofit2:adapter-rxjava:$retrofit_version"
+    compile "com.squareup.retrofit2:converter-scalars:$retrofit_version"
+    compile 'io.reactivex:rxandroid:1.2.0'
+    //rx
+    compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
+    compile 'io.reactivex.rxjava2:rxjava:2.1.2'
+    compile group: 'com.google.guava', name: 'guava', version: '27.1-android'
+    compile group: 'javax.inject', name: 'javax.inject', version: '1'
+    compile 'com.google.dagger:dagger:2.5'
+//    compile 'com.google.dagger:dagger-compiler:2.5'
+    compile 'com.parkingwang:okhttp3-loginterceptor:latest.integration'
+    compile 'com.squareup.okhttp3:logging-interceptor:3.5.0'
+    compile 'com.github.franmontiel:PersistentCookieJar:v1.0.1'
+    compile 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
+    compile 'com.google.dagger:dagger-android:2.16'
+    compile 'com.google.dagger:dagger-android-support:2.16'
+
+
+}

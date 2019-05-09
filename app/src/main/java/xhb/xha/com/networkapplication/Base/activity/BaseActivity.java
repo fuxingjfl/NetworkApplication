@@ -25,8 +25,10 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import butterknife.ButterKnife;
 import xhb.xha.com.networkapplication.Base.View.IView;
 import xhb.xha.com.networkapplication.Base.presenter.Ipresenter;
+import xhb.xha.com.networkapplication.Mpp;
 
 
 /**
@@ -58,6 +60,10 @@ public abstract class BaseActivity<T extends Ipresenter>extends AppCompatActivit
         if (mPresenter != null) {
             mPresenter.attachView(this);
         }
+
+        initView();
+        ButterKnife.bind(this);
+        initData();
     }
 
 
@@ -294,5 +300,10 @@ public abstract class BaseActivity<T extends Ipresenter>extends AppCompatActivit
 
     public abstract T createPresenter();
 
+    public abstract void initView();
+
+    public void initData(){
+
+    }
 
 }

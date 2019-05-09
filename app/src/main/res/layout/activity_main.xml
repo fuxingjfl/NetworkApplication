@@ -11,6 +11,7 @@
     tools:context="xhb.xha.com.networkapplication.modules.test.ui.MainActivity">
 
     <TextView
+        android:id="@+id/tv_dinaji"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Hello World!" />

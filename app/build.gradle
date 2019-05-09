@@ -1,18 +1,20 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.3"
+    compileSdkVersion 28
+    buildToolsVersion "28.0.3"
     defaultConfig {
         applicationId "xhb.xha.com.networkapplication"
-        minSdkVersion 16
-        targetSdkVersion 28
+        minSdkVersion 15
+        targetSdkVersion 26
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         jackOptions {
             enabled true
         }
+        //添加如下配置就OK了
+        javaCompileOptions { annotationProcessorOptions { includeCompileClasspath = true } }
     }
     //添加这段代码
     packagingOptions {
@@ -53,7 +55,6 @@ dependencies {
     compile group: 'com.google.guava', name: 'guava', version: '27.1-android'
     compile group: 'javax.inject', name: 'javax.inject', version: '1'
     compile 'com.google.dagger:dagger:2.5'
-//    compile 'com.google.dagger:dagger-compiler:2.5'
     compile 'com.parkingwang:okhttp3-loginterceptor:latest.integration'
     compile 'com.squareup.okhttp3:logging-interceptor:3.5.0'
     compile 'com.github.franmontiel:PersistentCookieJar:v1.0.1'
@@ -61,5 +62,7 @@ dependencies {
     compile 'com.google.dagger:dagger-android:2.16'
     compile 'com.google.dagger:dagger-android-support:2.16'
 
+    //butterKnife
+    implementation 'com.jakewharton:butterknife:7.0.1'
 
 }

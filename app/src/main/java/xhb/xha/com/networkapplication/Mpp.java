@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatDelegate;
 
 import javax.inject.Inject;
 
+import butterknife.ButterKnife;
 import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
 import dagger.android.HasActivityInjector;
@@ -37,7 +38,6 @@ public class Mpp extends Application implements HasActivityInjector{
     @Override
     public void onCreate() {
         super.onCreate();
-
         context = this;
 
     }

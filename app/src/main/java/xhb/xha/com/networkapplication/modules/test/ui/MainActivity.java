@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.TextView;
 
 import com.google.common.base.Predicate;
 import com.google.common.collect.ArrayListMultimap;
@@ -39,6 +40,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.SortedSet;
 
+import butterknife.Bind;
+import butterknife.OnClick;
 import okio.Okio;
 import xhb.xha.com.networkapplication.Base.activity.BaseActivity;
 import xhb.xha.com.networkapplication.R;
@@ -48,14 +51,32 @@ import xhb.xha.com.networkapplication.modules.test.presenter.TestPresenter;
 
 public class MainActivity extends BaseActivity<TestPresenter> implements TestContract.View {
 
+    @Bind(R.id.tv_dinaji)
+    TextView tv_dinaji;
+
+
+    @OnClick(R.id.tv_dinaji)
+    public void onViewClicked(){
+        Log.e("TAG","点击到了tv_dinaji====");
+    }
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public TestPresenter createPresenter() {
+        return new TestPresenter();
+    }
+
+    @Override
+    public void initView() {
         setContentView(R.layout.activity_main);
 
 //        news_hot
         mPresenter.getTestData("news_regimen");
 
+    }
+
+    @Override
+    public void initData() {
+        super.initData();
         ImmutableSet<String> foobar= ImmutableSortedSet.of("a","foot","fa","b","d","t");
         ImmutableSet<String> names = ImmutableSet.of("vivo", "oppo", "HUWEI");
         ImmutableList<String> strings = ImmutableList.copyOf(foobar);
@@ -148,12 +169,6 @@ public class MainActivity extends BaseActivity<TestPresenter> implements TestCon
                 return false;
             }
         });
-
-    }
-
-    @Override
-    public TestPresenter createPresenter() {
-        return new TestPresenter();
     }
 
     @Override
@@ -175,4 +190,6 @@ public class MainActivity extends BaseActivity<TestPresenter> implements TestCon
         Log.e("TAG","执行失败了......");
 
     }
+
+
 }

@@ -15,7 +15,7 @@ import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 
-import sun.misc.BASE64Decoder;
+//import sun.misc.BASE64Decoder;
 
 
 public class RSAUtil {
@@ -26,41 +26,41 @@ public class RSAUtil {
      * @param publicKeyStr 公钥数据字符串
      * @throws Exception 加载公钥时产生的异常
      */
-    public static RSAPublicKey loadPublicKey(String publicKeyStr) throws Exception {
-        try {
-            BASE64Decoder base64Decoder = new BASE64Decoder();
-            byte[] buffer = base64Decoder.decodeBuffer(publicKeyStr);
-            KeyFactory keyFactory = KeyFactory.getInstance("RSA");
-            X509EncodedKeySpec keySpec = new X509EncodedKeySpec(buffer);
-            return (RSAPublicKey) keyFactory.generatePublic(keySpec);
-        } catch (NoSuchAlgorithmException e) {
-            throw new Exception("无此算法");
-        } catch (InvalidKeySpecException e) {
-            throw new Exception("公钥非法");
-        } catch (IOException e) {
-            throw new Exception("公钥数据内容读取错误");
-        } catch (NullPointerException e) {
-            throw new Exception("公钥数据为空");
-        }
-    }
+//    public static RSAPublicKey loadPublicKey(String publicKeyStr) throws Exception {
+//        try {
+//            BASE64Decoder base64Decoder = new BASE64Decoder();
+//            byte[] buffer = base64Decoder.decodeBuffer(publicKeyStr);
+//            KeyFactory keyFactory = KeyFactory.getInstance("RSA");
+//            X509EncodedKeySpec keySpec = new X509EncodedKeySpec(buffer);
+//            return (RSAPublicKey) keyFactory.generatePublic(keySpec);
+//        } catch (NoSuchAlgorithmException e) {
+//            throw new Exception("无此算法");
+//        } catch (InvalidKeySpecException e) {
+//            throw new Exception("公钥非法");
+//        } catch (IOException e) {
+//            throw new Exception("公钥数据内容读取错误");
+//        } catch (NullPointerException e) {
+//            throw new Exception("公钥数据为空");
+//        }
+//    }
 
-    public static RSAPrivateKey loadPrivateKey(String privateKeyStr) throws Exception {
-        try {
-            BASE64Decoder base64Decoder = new BASE64Decoder();
-            byte[] buffer = base64Decoder.decodeBuffer(privateKeyStr);
-            PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(buffer);
-            KeyFactory keyFactory = KeyFactory.getInstance("RSA");
-            return (RSAPrivateKey) keyFactory.generatePrivate(keySpec);
-        } catch (NoSuchAlgorithmException e) {
-            throw new Exception("无此算法");
-        } catch (InvalidKeySpecException e) {
-            throw new Exception("私钥非法");
-        } catch (IOException e) {
-            throw new Exception("私钥数据内容读取错误");
-        } catch (NullPointerException e) {
-            throw new Exception("私钥数据为空");
-        }
-    }
+//    public static RSAPrivateKey loadPrivateKey(String privateKeyStr) throws Exception {
+//        try {
+//            BASE64Decoder base64Decoder = new BASE64Decoder();
+//            byte[] buffer = base64Decoder.decodeBuffer(privateKeyStr);
+//            PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(buffer);
+//            KeyFactory keyFactory = KeyFactory.getInstance("RSA");
+//            return (RSAPrivateKey) keyFactory.generatePrivate(keySpec);
+//        } catch (NoSuchAlgorithmException e) {
+//            throw new Exception("无此算法");
+//        } catch (InvalidKeySpecException e) {
+//            throw new Exception("私钥非法");
+//        } catch (IOException e) {
+//            throw new Exception("私钥数据内容读取错误");
+//        } catch (NullPointerException e) {
+//            throw new Exception("私钥数据为空");
+//        }
+//    }
 
 
     /**

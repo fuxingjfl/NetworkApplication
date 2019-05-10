@@ -1,5 +1,6 @@
 package xhb.xha.com.networkapplication.Base.activity;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -18,7 +19,11 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.PopupWindow;
+import android.widget.Toast;
 
+
+import com.lwkandroid.rtpermission.RTPermission;
+import com.lwkandroid.rtpermission.listener.OnPermissionResultListener;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -35,7 +40,7 @@ import xhb.xha.com.networkapplication.Mpp;
  * Created by lxk on 2017/6/10.
  */
 
-public abstract class BaseActivity<T extends Ipresenter>extends AppCompatActivity implements IView{
+public abstract class BaseActivity<T extends Ipresenter>extends AppCompatActivity implements IView,OnPermissionResultListener {
     private static List<Activity> activityList = new ArrayList<>();
     private static int MY_PERMISSION_REQUEST_CODE=1;
 
@@ -54,6 +59,14 @@ public abstract class BaseActivity<T extends Ipresenter>extends AppCompatActivit
 //        }
 ////        请求权限
 //        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.RECORD_AUDIO,Manifest.permission.ACCESS_FINE_LOCATION}, MY_PERMISSION_REQUEST_CODE);
+
+
+        new RTPermission.Builder().permissions(Manifest.permission.WRITE_EXTERNAL_STORAGE
+                , Manifest.permission.READ_EXTERNAL_STORAGE
+                , Manifest.permission.RECORD_AUDIO
+                , Manifest.permission.CAMERA
+                , Manifest.permission.ACCESS_FINE_LOCATION).start(BaseActivity.this,BaseActivity.this);
+
 
         mPresenter=createPresenter();
 
@@ -252,6 +265,17 @@ public abstract class BaseActivity<T extends Ipresenter>extends AppCompatActivit
      */ public Date getSupportEndDayofMonth(int year, int monthOfYear) { Calendar cal = Calendar.getInstance();
         // 不加下面2行，就是取当前时间前一个月的第一天及最后一天
         cal.set(Calendar.YEAR, year); cal.set(Calendar.MONTH, monthOfYear); cal.set(Calendar.DAY_OF_MONTH, 1); cal.set(Calendar.HOUR_OF_DAY, 23); cal.set(Calendar.MINUTE, 59); cal.set(Calendar.SECOND, 59); cal.add(Calendar.DAY_OF_MONTH, -1); Date lastDate = cal.getTime(); cal.set(Calendar.DAY_OF_MONTH, 1); Date firstDate = cal.getTime(); return lastDate; }
+
+
+    @Override
+    public void onAllGranted(String[] allPermissions) {
+        Toast.makeText(BaseActivity.this, "所有权限都已通过", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onDeined(String[] dinedPermissions) {
+        Toast.makeText(BaseActivity.this, "无法获取所有权限", Toast.LENGTH_SHORT).show();
+    }
 
     @Override
     public void showErrorMsg(String errorMsg) {

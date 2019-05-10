@@ -44,6 +44,4 @@ public class RxUtils {
         return observable -> observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
-
-
 }

@@ -3,7 +3,6 @@ package xhb.xha.com.networkapplication.utils;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import static com.xha.mangotv.util.PreContact.*;
 
 
 /**

@@ -1,9 +1,15 @@
 package xhb.xha.com.networkapplication.modules.test.ui;
 
+import android.Manifest;
+import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.View;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.google.common.base.Predicate;
@@ -27,6 +33,7 @@ import com.google.common.collect.Sets;
 import com.google.common.collect.SortedMultiset;
 import com.google.common.primitives.Ints;
 import com.google.common.primitives.Shorts;
+import com.lwkandroid.rtpermission.RTPermission;
 
 import org.checkerframework.checker.nullness.compatqual.NullableDecl;
 
@@ -44,7 +51,10 @@ import butterknife.Bind;
 import butterknife.OnClick;
 import okio.Okio;
 import xhb.xha.com.networkapplication.Base.activity.BaseActivity;
+import xhb.xha.com.networkapplication.Base.custom.BaseDialog;
 import xhb.xha.com.networkapplication.R;
+import xhb.xha.com.networkapplication.custom.TestDialog;
+import xhb.xha.com.networkapplication.custom.TestPop;
 import xhb.xha.com.networkapplication.modules.test.bean.News;
 import xhb.xha.com.networkapplication.modules.test.contract.TestContract;
 import xhb.xha.com.networkapplication.modules.test.presenter.TestPresenter;
@@ -54,10 +64,36 @@ public class MainActivity extends BaseActivity<TestPresenter> implements TestCon
     @Bind(R.id.tv_dinaji)
     TextView tv_dinaji;
 
+    private TestPop testPop;
 
     @OnClick(R.id.tv_dinaji)
     public void onViewClicked(){
         Log.e("TAG","点击到了tv_dinaji====");
+//        TestDialog testDialog = (TestDialog) new TestDialog(MainActivity.this).builder(BaseDialog.GUIDEANGLE)
+//                .setTitle("版本：")
+//                .setMsg("本次更新：" )
+//                .setNegativeButton("下载更新", new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        Log.e("TAG","点击下载更新");
+//                    }
+//                });
+//                testDialog.setPositiveButton("稍后更新", new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        Log.e("TAG","点击稍后更新");
+//                    }
+//                });
+//        testDialog.show();
+        if (testPop != null) {
+                        if (testPop.isShowing()) {
+                            testPop.dismiss();
+                            // StateChanged();
+                        } else {
+                            setWindowTranslucence(0.3);
+                            testPop.showAtLocation(tv_dinaji, Gravity.BOTTOM, 0, 0);
+                        }
+                    }
     }
 
     @Override
@@ -68,15 +104,23 @@ public class MainActivity extends BaseActivity<TestPresenter> implements TestCon
     @Override
     public void initView() {
         setContentView(R.layout.activity_main);
+        testPop = new TestPop(MainActivity.this,R.layout.layout_testdialog);
+        testPop.setOnDismissListener(onDismissListener);
 
 //        news_hot
         mPresenter.getTestData("news_regimen");
 
     }
-
+    private PopupWindow.OnDismissListener onDismissListener = new PopupWindow.OnDismissListener() {
+        @Override
+        public void onDismiss() {
+            setWindowTranslucence(1.0f);
+        }
+    };
     @Override
     public void initData() {
         super.initData();
+
         ImmutableSet<String> foobar= ImmutableSortedSet.of("a","foot","fa","b","d","t");
         ImmutableSet<String> names = ImmutableSet.of("vivo", "oppo", "HUWEI");
         ImmutableList<String> strings = ImmutableList.copyOf(foobar);

@@ -58,42 +58,54 @@ import xhb.xha.com.networkapplication.custom.TestPop;
 import xhb.xha.com.networkapplication.modules.test.bean.News;
 import xhb.xha.com.networkapplication.modules.test.contract.TestContract;
 import xhb.xha.com.networkapplication.modules.test.presenter.TestPresenter;
+import xhb.xha.com.networkapplication.statusbar.Eyes;
 
 public class MainActivity extends BaseActivity<TestPresenter> implements TestContract.View {
 
     @Bind(R.id.tv_dinaji)
     TextView tv_dinaji;
+    @Bind(R.id.tv_pop)
+    TextView tv_pop;
 
     private TestPop testPop;
 
     @OnClick(R.id.tv_dinaji)
     public void onViewClicked(){
         Log.e("TAG","点击到了tv_dinaji====");
-//        TestDialog testDialog = (TestDialog) new TestDialog(MainActivity.this).builder(BaseDialog.GUIDEANGLE)
-//                .setTitle("版本：")
-//                .setMsg("本次更新：" )
-//                .setNegativeButton("下载更新", new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        Log.e("TAG","点击下载更新");
-//                    }
-//                });
-//                testDialog.setPositiveButton("稍后更新", new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        Log.e("TAG","点击稍后更新");
-//                    }
-//                });
-//        testDialog.show();
-        if (testPop != null) {
-                        if (testPop.isShowing()) {
-                            testPop.dismiss();
-                            // StateChanged();
-                        } else {
-                            setWindowTranslucence(0.3);
-                            testPop.showAtLocation(tv_dinaji, Gravity.BOTTOM, 0, 0);
-                        }
+        Eyes.setStatusBarColor(MainActivity.this, getResources().getColor(R.color.colorAccent));
+        TestDialog testDialog = (TestDialog) new TestDialog(MainActivity.this).builder(BaseDialog.GUIDEANGLE)
+                .setTitle("版本：")
+                .setMsg("本次更新：" )
+                .setNegativeButton("下载更新", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Log.e("TAG","点击下载更新");
                     }
+                });
+                testDialog.setPositiveButton("稍后更新", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Log.e("TAG","点击稍后更新");
+                    }
+                });
+            testDialog.show();
+    }
+
+
+    @OnClick(R.id.tv_pop)
+    public void ANpop(){
+
+        //状态栏设置为透明状态栏
+        Eyes.translucentStatusBar(MainActivity.this,true);
+
+        if (testPop != null) {
+            if (testPop.isShowing()) {
+                testPop.dismiss();
+            } else {
+                setWindowTranslucence(0.3);
+                testPop.showAtLocation(tv_dinaji, Gravity.BOTTOM, 0, 0);
+            }
+        }
     }
 
     @Override
@@ -234,6 +246,5 @@ public class MainActivity extends BaseActivity<TestPresenter> implements TestCon
         Log.e("TAG","执行失败了......");
 
     }
-
 
 }

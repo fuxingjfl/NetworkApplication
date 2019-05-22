@@ -1,6 +1,7 @@
 package xhb.xha.com.networkapplication.Base.custom;
 
 import android.content.Context;
+import android.graphics.drawable.ColorDrawable;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 

@@ -306,4 +306,5 @@ public abstract class BaseActivity<T extends Ipresenter> extends AppCompatActivi
 
 
     }
+
 }

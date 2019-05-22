@@ -63,5 +63,6 @@ dependencies {
     //butterKnife
     implementation 'com.jakewharton:butterknife:7.0.1'
     compile project(':RTPermissionLib')
+    compile 'com.android.support:design:27.1.1'
 //    compile 'pub.devrel:easypermissions:2.0.0'  goole权限
 }

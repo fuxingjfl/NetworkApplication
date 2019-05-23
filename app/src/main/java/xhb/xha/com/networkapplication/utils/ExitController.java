@@ -21,8 +21,7 @@ public class ExitController {
 				
 			}
 		}, 2000);
-		
-		
+
 	}
 	
 	

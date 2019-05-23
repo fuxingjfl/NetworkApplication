@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
@@ -66,12 +67,19 @@ public class MainActivity extends BaseActivity<TestPresenter> implements TestCon
     TextView tv_dinaji;
     @Bind(R.id.tv_pop)
     TextView tv_pop;
+    @Bind(R.id.iv_img)
+    ImageView iv_img;
 
     private TestPop testPop;
+
+    int i=180;
 
     @OnClick(R.id.tv_dinaji)
     public void onViewClicked(){
         Log.e("TAG","点击到了tv_dinaji====");
+        iv_img.animate().rotation(i);
+        iv_img.animate().start();
+        i+=180;
         Eyes.setStatusBarColor(MainActivity.this, getResources().getColor(R.color.colorAccent));
         TestDialog testDialog = (TestDialog) new TestDialog(MainActivity.this).builder(BaseDialog.GUIDEANGLE)
                 .setTitle("版本：")

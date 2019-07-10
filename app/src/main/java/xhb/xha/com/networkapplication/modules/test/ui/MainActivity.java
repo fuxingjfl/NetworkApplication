@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.common.base.Predicate;
 import com.google.common.collect.ArrayListMultimap;
@@ -35,6 +36,9 @@ import com.google.common.collect.SortedMultiset;
 import com.google.common.primitives.Ints;
 import com.google.common.primitives.Shorts;
 import com.lwkandroid.rtpermission.RTPermission;
+import com.squareup.picasso.Picasso;
+import com.tencent.tinker.lib.tinker.Tinker;
+import com.tinkerpatch.sdk.TinkerPatch;
 
 import org.checkerframework.checker.nullness.compatqual.NullableDecl;
 
@@ -99,6 +103,10 @@ public class MainActivity extends BaseActivity<TestPresenter> implements TestCon
             testDialog.show();
     }
 
+    @OnClick(R.id.iv_img)
+    public void onImgViewClicked(){
+        Toast.makeText(MainActivity.this,"点击到图片啦啦啦啦啦啦,什么孽哒哒哒哒哒",Toast.LENGTH_LONG).show();
+    }
 
     @OnClick(R.id.tv_pop)
     public void ANpop(){
@@ -233,6 +241,9 @@ public class MainActivity extends BaseActivity<TestPresenter> implements TestCon
                 return false;
             }
         });
+
+        Picasso.with(MainActivity.this).load("http://222.74.63.136:5000/images/2019071011/11201907101136.jpg").into(iv_img);
+
     }
 
     @Override

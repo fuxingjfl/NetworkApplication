@@ -103,6 +103,7 @@ public class MainActivity extends BaseActivity<TestPresenter> implements TestCon
             testDialog.show();
     }
 
+
     @OnClick(R.id.iv_img)
     public void onImgViewClicked(){
         Toast.makeText(MainActivity.this,"点击到图片啦啦啦啦啦啦,什么孽哒哒哒哒哒",Toast.LENGTH_LONG).show();
@@ -145,6 +146,17 @@ public class MainActivity extends BaseActivity<TestPresenter> implements TestCon
             setWindowTranslucence(1.0f);
         }
     };
+
+    @Override
+    public void initCreateView() {
+        setContentView(R.layout.activity_main);
+        testPop = new TestPop(MainActivity.this,R.layout.layout_testdialog);
+        testPop.setOnDismissListener(onDismissListener);
+
+//        news_hot
+        mPresenter.getTestData("news_regimen");
+    }
+
     @Override
     public void initData() {
         super.initData();

@@ -23,19 +23,6 @@ public abstract class BaseActivity<T extends Ipresenter> extends BasicActivity i
 
 
 
-
-//    /** 判断触摸时间派发间隔 */
-//    @Override
-//    public boolean dispatchTouchEvent(MotionEvent ev) {
-//        if (ev.getAction() == MotionEvent.ACTION_DOWN) {
-//            if (MyUtils.isFastDoubleClick()) {
-//                return true;
-//            }
-//        }
-//        return super.dispatchTouchEvent(ev);
-//    }
-
-
     //获取状态栏的高度
     public int getStatusBarHeight() {
         int result = 0;
@@ -175,13 +162,13 @@ public abstract class BaseActivity<T extends Ipresenter> extends BasicActivity i
 
     public abstract T createPresenter();
 
-
+    @Override
     public void initData() {
+        super.initData();
         mPresenter = createPresenter();
         if (mPresenter != null) {
             mPresenter.attachView(this);
         }
-
     }
 
     @Override

@@ -24,11 +24,10 @@ public class MyThread {
 	}
 
 	public static ThreadPool getInstance() {
-		if (threadPool == null) {// ��һ ����ͬ��������ִ�д���
-			synchronized (MyThread.class) {// ����
-				// ���������̲߳���ȫ������
+		if (threadPool == null) {
+			synchronized (MyThread.class) {
 				if (threadPool == null) {
-					// cpu�ĸ���
+
 					int availableProcessors = Runtime.getRuntime()
 							.availableProcessors();
 					int num = availableProcessors * 2 + 1;

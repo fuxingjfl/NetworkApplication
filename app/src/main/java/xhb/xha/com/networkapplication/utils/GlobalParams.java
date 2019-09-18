@@ -2,7 +2,7 @@ package xhb.xha.com.networkapplication.utils;
 
 /**
  * 
- * 存放静�?�变量�??
+ * 全局参数池
  * 
  * @author dell-dell
  *

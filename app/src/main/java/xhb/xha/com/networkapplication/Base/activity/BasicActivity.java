@@ -60,9 +60,11 @@ public abstract class BasicActivity extends AppCompatActivity implements OnPermi
 //                , Manifest.permission.CAMERA
 //                , Manifest.permission.ACCESS_FINE_LOCATION).start(this, this);
 
-        ButterKnife.bind(this);
         PreUtil.getInstance().init(this);
+        //初始化布局
         initCreateView();
+        ButterKnife.bind(this);
+        //初始化数据
         initData();
 
     }

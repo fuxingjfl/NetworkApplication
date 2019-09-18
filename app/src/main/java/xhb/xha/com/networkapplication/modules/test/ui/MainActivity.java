@@ -1,14 +1,9 @@
 package xhb.xha.com.networkapplication.modules.test.ui;
 
-import android.Manifest;
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.net.Uri;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
@@ -34,27 +29,15 @@ import com.google.common.collect.Multiset;
 import com.google.common.collect.Sets;
 import com.google.common.collect.SortedMultiset;
 import com.google.common.primitives.Ints;
-import com.google.common.primitives.Shorts;
-import com.lwkandroid.rtpermission.RTPermission;
 import com.squareup.picasso.Picasso;
-import com.tencent.tinker.lib.tinker.Tinker;
-import com.tinkerpatch.sdk.TinkerPatch;
-
 import org.checkerframework.checker.nullness.compatqual.NullableDecl;
-
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.SortedSet;
-
 import butterknife.Bind;
 import butterknife.OnClick;
-import okio.Okio;
 import xhb.xha.com.networkapplication.Base.activity.BaseActivity;
 import xhb.xha.com.networkapplication.Base.custom.BaseDialog;
 import xhb.xha.com.networkapplication.R;
@@ -63,7 +46,8 @@ import xhb.xha.com.networkapplication.custom.TestPop;
 import xhb.xha.com.networkapplication.modules.test.bean.News;
 import xhb.xha.com.networkapplication.modules.test.contract.TestContract;
 import xhb.xha.com.networkapplication.modules.test.presenter.TestPresenter;
-import xhb.xha.com.networkapplication.statusbar.Eyes;
+import xhb.xha.com.networkapplication.utils.DensityUtil;
+import xhb.xha.com.networkapplication.utils.StatusBarUtils;
 
 public class MainActivity extends BaseActivity<TestPresenter> implements TestContract.View {
 
@@ -84,7 +68,10 @@ public class MainActivity extends BaseActivity<TestPresenter> implements TestCon
         iv_img.animate().rotation(i);
         iv_img.animate().start();
         i+=180;
-        Eyes.setStatusBarColor(MainActivity.this, getResources().getColor(R.color.colorAccent));
+        //状态栏
+//        Eyes.setStatusBarColor(MainActivity.this, getResources().getColor(R.color.colorAccent));
+        StatusBarUtils.setColorNoTranslucent(MainActivity.this,getResources().getColor(R.color.colorAccent));
+
         TestDialog testDialog = (TestDialog) new TestDialog(MainActivity.this).builder(BaseDialog.GUIDEANGLE)
                 .setTitle("版本：")
                 .setMsg("本次更新：" )
@@ -113,7 +100,9 @@ public class MainActivity extends BaseActivity<TestPresenter> implements TestCon
     public void ANpop(){
 
         //状态栏设置为透明状态栏
-        Eyes.translucentStatusBar(MainActivity.this,true);
+//        Eyes.translucentStatusBar(MainActivity.this,true);
+        StatusBarUtils.setColorNoTranslucent(MainActivity.this,getResources().getColor(R.color.colorPrimary));
+
 
         if (testPop != null) {
             if (testPop.isShowing()) {
@@ -130,16 +119,6 @@ public class MainActivity extends BaseActivity<TestPresenter> implements TestCon
         return new TestPresenter();
     }
 
-    @Override
-    public void initView() {
-        setContentView(R.layout.activity_main);
-        testPop = new TestPop(MainActivity.this,R.layout.layout_testdialog);
-        testPop.setOnDismissListener(onDismissListener);
-
-//        news_hot
-        mPresenter.getTestData("news_regimen");
-
-    }
     private PopupWindow.OnDismissListener onDismissListener = new PopupWindow.OnDismissListener() {
         @Override
         public void onDismiss() {
@@ -147,14 +126,10 @@ public class MainActivity extends BaseActivity<TestPresenter> implements TestCon
         }
     };
 
+
     @Override
     public void initCreateView() {
         setContentView(R.layout.activity_main);
-        testPop = new TestPop(MainActivity.this,R.layout.layout_testdialog);
-        testPop.setOnDismissListener(onDismissListener);
-
-//        news_hot
-        mPresenter.getTestData("news_regimen");
     }
 
     @Override
@@ -176,7 +151,6 @@ public class MainActivity extends BaseActivity<TestPresenter> implements TestCon
 
         Set<List<String>> lists1 = Sets.cartesianProduct(names, foobar);
         Log.e("TAG","笛卡尔==="+lists1.toString());
-
 
 
         Multiset<Object> multiset = HashMultiset.create();
@@ -254,8 +228,24 @@ public class MainActivity extends BaseActivity<TestPresenter> implements TestCon
             }
         });
 
-        Picasso.with(MainActivity.this).load("http://222.74.63.136:5000/images/2019071011/11201907101136.jpg").into(iv_img);
+        testPop = new TestPop(MainActivity.this,R.layout.layout_testdialog);
+        ViewGroup.LayoutParams layoutParams = tv_pop.getLayoutParams();
+        layoutParams.width= DensityUtil.dp2px(MainActivity.this,300.5f);
+        tv_pop.setLayoutParams(layoutParams);
+        mPresenter.getTestData("news_regimen");
+        testPop.setOnDismissListener(onDismissListener);
 
+        Picasso.with(MainActivity.this).load("https://222.74.63.136:5000/images/2019071011/11201907101136.jpg").into(iv_img);
+
+    }
+
+    @Override
+    public void setStatusBar() {
+        super.setStatusBar();
+
+//        StatusBarUtils.setTransparent(this);
+
+        StatusBarUtils.setColorNoTranslucent(MainActivity.this,getResources().getColor(R.color.colorPrimaryDark));
     }
 
     @Override

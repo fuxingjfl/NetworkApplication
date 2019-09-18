@@ -371,35 +371,4 @@ public class NumYzUtils {
     }
 
 
-	
-	/**
-	 * dp转px
-	 * 
-	 * @param dp
-	 * @param context
-	 * @return
-	 */
-	public static float DpzhuanPx(int dp, Context context) {
-
-		float density = context.getResources().getDisplayMetrics().density;
-
-		float px;
-		px = dp * density;
-		return px;
-	}
-
-	/**
-	 * px转dp
-	 * 
-	 * @param dp
-	 * @param context
-	 * @return
-	 */
-	public static float PxzhuanDp(int px, Context context) {
-		float density = context.getResources().getDisplayMetrics().density;
-		float dp;
-		dp = px / density;
-		return dp;
-	}
-
 }

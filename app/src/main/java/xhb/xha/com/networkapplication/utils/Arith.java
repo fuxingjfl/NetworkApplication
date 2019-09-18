@@ -6,7 +6,7 @@ import java.math.BigDecimal;
  * 
  * float与double的精确的运算的工具类
  * 
- * @author dell-dell
+ *
  *
  */
 public class Arith {

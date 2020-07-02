@@ -17,7 +17,7 @@ public abstract class BasePop extends PopupWindow {
 
     public BasePop(Context context){
 
-
+        //绅士手
         this.context=context;
 
     }

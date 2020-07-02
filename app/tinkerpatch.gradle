@@ -68,6 +68,7 @@ android {
 tinkerPatch {
     ignoreWarning = false
     useSign = true
+
     dex {
         dexMode = "jar"
         pattern = ["classes*.dex"]

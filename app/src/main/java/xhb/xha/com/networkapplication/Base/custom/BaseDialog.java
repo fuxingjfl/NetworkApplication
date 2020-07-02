@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import xhb.xha.com.networkapplication.R;
+import xhb.xha.com.networkapplication.databinding.DialogLayoutBinding;
 
 /**
  * Created by ysq on 2019/5/20.
@@ -37,12 +38,15 @@ public abstract class BaseDialog {
     }
 
     public BaseDialog builder(String type){
-        view = View.inflate(context, R.layout.dialog_layout,null);
+
+        DialogLayoutBinding inflate = DialogLayoutBinding.inflate(LayoutInflater.from(context));
+
+        view = inflate.getRoot();
 
 //        LayoutInflater from = LayoutInflater.from(context);
 //        view = from.inflate(R.layout.dialog_layout, null);
 
-        ll_content=view.findViewById(R.id.ll_content);
+        ll_content=inflate.llContent;
 
         // 调整dialog背景大小
         view.setLayoutParams(new FrameLayout.LayoutParams((int) (display

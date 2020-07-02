@@ -1,5 +1,6 @@
 package xhb.xha.com.networkapplication.Base.activity;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import android.view.WindowManager;
 import android.widget.PopupWindow;
 import android.widget.Toast;
 
+import com.lwkandroid.rtpermission.RTPermission;
 import com.lwkandroid.rtpermission.listener.OnPermissionResultListener;
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
@@ -30,7 +32,6 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
-import butterknife.ButterKnife;
 import xhb.xha.com.networkapplication.utils.PreUtil;
 
 /**
@@ -63,7 +64,7 @@ public abstract class BasicActivity extends AppCompatActivity implements OnPermi
         PreUtil.getInstance().init(this);
         //初始化布局
         initCreateView();
-        ButterKnife.bind(this);
+//        ButterKnife.bind(this);
         //初始化数据
         initData();
 

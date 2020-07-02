@@ -2,10 +2,10 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/NetworkApplication.iml" filepath="$PROJECT_DIR$/NetworkApplication.iml" />
-      <module fileurl="file://$PROJECT_DIR$/RTPermissionLib/RTPermissionLib.iml" filepath="$PROJECT_DIR$/RTPermissionLib/RTPermissionLib.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/lib/lib.iml" filepath="$PROJECT_DIR$/lib/lib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/NetworkApplication.iml" filepath="$PROJECT_DIR$/.idea/NetworkApplication.iml" group="NetworkApplication" />
+      <module fileurl="file://$PROJECT_DIR$/RTPermissionLib/RTPermissionLib.iml" filepath="$PROJECT_DIR$/RTPermissionLib/RTPermissionLib.iml" group="NetworkApplication/RTPermissionLib" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" group="NetworkApplication/app" />
+      <module fileurl="file://$PROJECT_DIR$/lib/lib.iml" filepath="$PROJECT_DIR$/lib/lib.iml" group="NetworkApplication/lib" />
     </modules>
   </component>
 </project>

@@ -31,8 +31,10 @@ public abstract class BasePop extends PopupWindow {
         setHeight(LinearLayout.LayoutParams.WRAP_CONTENT);
         setAnimationStyle(R.style.popwin_anim_style);
 //        setBackgroundDrawable(new ColorDrawable(context.getResources().getColor(android.R.color.transparent)));
-        setFocusable(false);
-        setOutsideTouchable(false);
+//        setFocusable(false);
+//        setOutsideTouchable(false);
+        setFocusable(true);
+        setOutsideTouchable(true);
         update();
     }
 

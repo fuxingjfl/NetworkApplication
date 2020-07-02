@@ -2,11 +2,11 @@ package xhb.xha.com.networkapplication.modules.test.ui;
 
 import android.util.Log;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.PopupWindow;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.common.base.Predicate;
@@ -21,7 +21,6 @@ import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.ImmutableSortedMultiset;
 import com.google.common.collect.ImmutableSortedSet;
 import com.google.common.collect.Iterables;
-import com.google.common.collect.LinkedHashMultiset;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Multimap;
@@ -29,6 +28,7 @@ import com.google.common.collect.Multiset;
 import com.google.common.collect.Sets;
 import com.google.common.collect.SortedMultiset;
 import com.google.common.primitives.Ints;
+import com.gyf.immersionbar.ImmersionBar;
 import com.squareup.picasso.Picasso;
 import org.checkerframework.checker.nullness.compatqual.NullableDecl;
 import java.util.ArrayList;
@@ -36,13 +36,18 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import butterknife.Bind;
-import butterknife.OnClick;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+
 import xhb.xha.com.networkapplication.Base.activity.BaseActivity;
 import xhb.xha.com.networkapplication.Base.custom.BaseDialog;
+import xhb.xha.com.networkapplication.custom.LoadingDialog;
 import xhb.xha.com.networkapplication.R;
 import xhb.xha.com.networkapplication.custom.TestDialog;
 import xhb.xha.com.networkapplication.custom.TestPop;
+import xhb.xha.com.networkapplication.databinding.ActivityMainBinding;
+import xhb.xha.com.networkapplication.databinding.LayoutTestdialogBinding;
 import xhb.xha.com.networkapplication.modules.test.bean.News;
 import xhb.xha.com.networkapplication.modules.test.contract.TestContract;
 import xhb.xha.com.networkapplication.modules.test.presenter.TestPresenter;
@@ -51,22 +56,17 @@ import xhb.xha.com.networkapplication.utils.StatusBarUtils;
 
 public class MainActivity extends BaseActivity<TestPresenter> implements TestContract.View {
 
-    @Bind(R.id.tv_dinaji)
-    TextView tv_dinaji;
-    @Bind(R.id.tv_pop)
-    TextView tv_pop;
-    @Bind(R.id.iv_img)
-    ImageView iv_img;
-
+    ActivityMainBinding inflate;
     private TestPop testPop;
 
     int i=180;
 
-    @OnClick(R.id.tv_dinaji)
+//    @OnClick(R.id.tv_dinaji)
     public void onViewClicked(){
         Log.e("TAG","点击到了tv_dinaji====");
-        iv_img.animate().rotation(i);
-        iv_img.animate().start();
+        shumaDialog(Gravity.CENTER,R.style.Alpah_aniamtion);
+        inflate.ivImg.animate().rotation(i);
+        inflate.ivImg.animate().start();
         i+=180;
         //状态栏
 //        Eyes.setStatusBarColor(MainActivity.this, getResources().getColor(R.color.colorAccent));
@@ -91,12 +91,7 @@ public class MainActivity extends BaseActivity<TestPresenter> implements TestCon
     }
 
 
-    @OnClick(R.id.iv_img)
-    public void onImgViewClicked(){
-        Toast.makeText(MainActivity.this,"点击到图片啦啦啦啦啦啦,什么孽哒哒哒哒哒",Toast.LENGTH_LONG).show();
-    }
 
-    @OnClick(R.id.tv_pop)
     public void ANpop(){
 
         //状态栏设置为透明状态栏
@@ -109,7 +104,7 @@ public class MainActivity extends BaseActivity<TestPresenter> implements TestCon
                 testPop.dismiss();
             } else {
                 setWindowTranslucence(0.3);
-                testPop.showAtLocation(tv_dinaji, Gravity.BOTTOM, 0, 0);
+                testPop.showAtLocation(inflate.tvDinaji, Gravity.BOTTOM, 0, 0);
             }
         }
     }
@@ -129,12 +124,31 @@ public class MainActivity extends BaseActivity<TestPresenter> implements TestCon
 
     @Override
     public void initCreateView() {
-        setContentView(R.layout.activity_main);
+
+        inflate = ActivityMainBinding.inflate(LayoutInflater.from(this));
+
+        setContentView(inflate.getRoot());
+
     }
 
     @Override
     public void initData() {
         super.initData();
+
+
+        ScheduledExecutorService service = Executors.newSingleThreadScheduledExecutor();
+        service.scheduleAtFixedRate(new Runnable() {
+            int i=0;
+            @Override
+            public void run() {
+                i++;
+                Log.e("TAG","Runnable=="+(i++));
+            }
+        },2, 5,TimeUnit.SECONDS);
+
+
+        //加载进度
+        shumaDialog(Gravity.CENTER,R.style.Alpah_aniamtion);
 
         ImmutableSet<String> foobar= ImmutableSortedSet.of("a","foot","fa","b","d","t");
         ImmutableSet<String> names = ImmutableSet.of("vivo", "oppo", "HUWEI");
@@ -148,10 +162,8 @@ public class MainActivity extends BaseActivity<TestPresenter> implements TestCon
         SortedMultiset<Integer> ccc = ImmutableSortedMultiset.of(3,2,5,7);
         Log.e("TAG","ccc==="+ccc.toString());
 
-
         Set<List<String>> lists1 = Sets.cartesianProduct(names, foobar);
         Log.e("TAG","笛卡尔==="+lists1.toString());
-
 
         Multiset<Object> multiset = HashMultiset.create();
         multiset.add("3232");
@@ -228,14 +240,32 @@ public class MainActivity extends BaseActivity<TestPresenter> implements TestCon
             }
         });
 
-        testPop = new TestPop(MainActivity.this,R.layout.layout_testdialog);
-        ViewGroup.LayoutParams layoutParams = tv_pop.getLayoutParams();
-        layoutParams.width= DensityUtil.dp2px(MainActivity.this,300.5f);
-        tv_pop.setLayoutParams(layoutParams);
+        testPop = new TestPop(MainActivity.this, LayoutTestdialogBinding.inflate(LayoutInflater.from(this)));//R.layout.layout_testdialog
+        ViewGroup.LayoutParams layoutParams = inflate.tvPop.getLayoutParams();
+        layoutParams.width= DensityUtil.dp2px(MainActivity.this, getResources().getDimension(R.dimen.qb_px_150));
+        inflate.tvPop.setLayoutParams(layoutParams);
         mPresenter.getTestData("news_regimen");
         testPop.setOnDismissListener(onDismissListener);
 
-        Picasso.with(MainActivity.this).load("https://222.74.63.136:5000/images/2019071011/11201907101136.jpg").into(iv_img);
+        Picasso.with(MainActivity.this).load("https://222.74.63.136:5000/images/2019071011/11201907101136.jpg").into(inflate.ivImg);
+        inflate.tvDinaji.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onViewClicked();
+            }
+        });
+        inflate.ivImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(MainActivity.this,"点击到图片啦啦啦啦啦啦,什么孽哒哒哒哒哒",Toast.LENGTH_LONG).show();
+            }
+        });
+        inflate.tvPop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ANpop();
+            }
+        });
 
     }
 
@@ -243,9 +273,23 @@ public class MainActivity extends BaseActivity<TestPresenter> implements TestCon
     public void setStatusBar() {
         super.setStatusBar();
 
-//        StatusBarUtils.setTransparent(this);
+        /*
+        *  状态处理工具类，这里用immersionbar
+        *  StatusBarUtils.setTransparent(this);
+        *  StatusBarUtils.setColorNoTranslucent(MainActivity.this,getResources().getColor(R.color.colorPrimaryDark));
+        * */
 
-        StatusBarUtils.setColorNoTranslucent(MainActivity.this,getResources().getColor(R.color.colorPrimaryDark));
+
+        ImmersionBar mImmersionBar=ImmersionBar.with(this);
+        mImmersionBar
+                .addTag("tag")  //给以上设置的参数打标记
+                .getTag("tag") //根据tag获得沉浸式参数
+                .fullScreen(false)
+                .statusBarColor(R.color.colorAccent)
+                .navigationBarColor(R.color.green_rtdialog)
+                .init();
+
+
     }
 
     @Override
@@ -267,5 +311,28 @@ public class MainActivity extends BaseActivity<TestPresenter> implements TestCon
         Log.e("TAG","执行失败了......");
 
     }
+
+    private LoadingDialog dialog;
+    /*
+     * 对话框
+     * */
+    private void shumaDialog(int grary, int animationStyle) {
+        LoadingDialog.Builder builder = new LoadingDialog.Builder(this);
+        dialog = builder.setViewId(R.layout.view_tips_loading)
+                //设置dialogpadding
+                .setPaddingdp(0, 10, 0, 10)
+                //设置显示位置
+                .setGravity(grary)
+                //设置动画
+                .setAnimation(animationStyle)
+                //设置dialog的宽高
+                .setWidthHeightpx(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+                //设置触摸dialog外围是否关闭
+                .isOnTouchCanceled(false)
+                //设置监听事件
+                .builder();
+        dialog.show();
+    }
+
 
 }

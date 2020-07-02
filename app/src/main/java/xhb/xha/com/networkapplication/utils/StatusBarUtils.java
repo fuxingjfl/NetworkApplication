@@ -21,6 +21,13 @@ import java.lang.reflect.Method;
 
 import xhb.xha.com.networkapplication.R;
 
+/**
+ *
+ *
+ * 沉浸式状态栏工具类
+ *
+ */
+
 public class StatusBarUtils {
 
     public static final int DEFAULT_STATUS_BAR_ALPHA = 112;

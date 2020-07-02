@@ -22,9 +22,18 @@ public class DimenGenerator {
         int smallest = DESIGN_WIDTH>DESIGN_HEIGHT? DESIGN_HEIGHT:DESIGN_WIDTH;  //     求得最小宽度
         DimenTypes[] values = DimenTypes.values();
         for (DimenTypes value : values) {
-            File file = new File("");
-            System.out.println(file.getAbsolutePath()+"\\app\\src\\main\\res");
-            MakeUtils.makeAll(smallest, value, file.getAbsolutePath()+"\\app\\src\\main\\res");
+
+            //mac路径
+            File file = new File("/Users/xiaoxin/Downloads/NetworkApplication");
+
+            //window电脑的路径
+//            File file = new File("");
+
+//            System.out.println(file.getAbsolutePath()+"\\app\\src\\main\\res");
+//            MakeUtils.makeAll(smallest, value, file.getAbsolutePath()+"\\app\\src\\main\\res");
+            MakeUtils.makeAll(smallest, value, file.getAbsolutePath()+"/app/src/main/res");
+
+
         }
     }
 }
